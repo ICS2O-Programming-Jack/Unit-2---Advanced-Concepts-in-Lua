@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------------
 --
 -- splash_screen.lua
--- Created by: Your Name
+-- Created by: Jack F
 -- Date: Month Day, Year
 -- Description: This is the splash screen of the game. It displays the 
 -- company logo that...
