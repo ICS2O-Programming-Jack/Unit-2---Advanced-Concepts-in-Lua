@@ -5,6 +5,26 @@
 -- Date: Month Day, Year
 -- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
+--Music
+local Music1 = audio.loadSound("Sounds/Music1.mp3")
+local Music1Channel
+
+local Music2 = audio.loadSound("Sounds/Music2.mp3")
+local Music2Channel
+
+local Music3 = audio.loadSound("Sounds/Music3.mp3")
+local Music3Channel
+
+
+randomOperator = math.random(1, 3)
+    
+    if (randomOperator == 1) then
+     Music1Channel = audio.play(Music1)
+    elseif (randomOperator == 2) then 
+     Music1Channel = audio.play(Music2)
+    elseif (randomOperator == 3) then
+     Music1Channel = audio.play(Music3)
+    end
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
@@ -23,6 +43,19 @@ sceneName = "level1_screen"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
+-----------------------------------------------------------------------------------------
+--Functions
+-----------------------------------------------------------------------------------------
+local function AddPhysicsBodies()
+    physics.addBody(Ball1, {density=1.0, friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(Ball2, {density=1.0, friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(Ball3, {density=1.0, friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(ground,"static", {density=1.0, friction=0.5, bounce=0.3, radius=25})
+end
+
+
+
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -30,7 +63,7 @@ local scene = composer.newScene( sceneName )
 
 -- The local variables for this scene
 local bkg_image
-
+local physics = require("physics")
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -40,6 +73,27 @@ function scene:create( event )
 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
+    ------------------------------------------------------------------------------------------
+    --Images
+    
+
+    ground = display.newImage("Images/floor.png", 50, 50)
+    ground.x = display.contentWidth/2
+    ground.y = 740
+    ground.width = display.contentWidth
+
+    Ball1 = display.newImageRect("Images/Ball3.png", 50, 50)
+    Ball2 = display.newImageRect("Images/Ball2.png", 50, 50)
+    Ball3 = display.newImageRect("Images/Ball3.png", 50, 50)
+    
+    Ball1.x = 200
+    Ball1.y = 150
+
+    Ball2.x = 250
+    Ball2.y = 150
+
+    Ball3.x = 300
+    Ball3.y = 100
 
     -----------------------------------------------------------------------------------------
 
@@ -70,16 +124,27 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-
+   physics.start()
         -- Called when the scene is still off screen (but is about to come on screen).
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
 
+     AddPhysicsBodies()
+    
+    
+
+
+
+
+
+
+
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-
+       timer.performWithDelay( 0, firstBall)
+       timer.performWithDelay( 0, Floor)
     end
 
 end --function scene:show( event )
