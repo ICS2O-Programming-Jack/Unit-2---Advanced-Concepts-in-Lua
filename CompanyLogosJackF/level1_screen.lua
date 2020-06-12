@@ -5,6 +5,24 @@
 -- Date: Month Day, Year
 -- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------
+-- INITIALIZATIONS
+-----------------------------------------------------------------------------------------
+
+-- Use Composer Libraries
+local composer = require( "composer" )
+local widget = require( "widget" )
+local physics = require("physics")
+-----------------------------------------------------------------------------------------
+
+-- Naming Scene
+sceneName = "level1_screen"
+
+-----------------------------------------------------------------------------------------
+
+
 --Music
 local Music1 = audio.loadSound("Sounds/Music1.mp3")
 local Music1Channel
@@ -16,30 +34,8 @@ local Music3 = audio.loadSound("Sounds/Music3.mp3")
 local Music3Channel
 
 
-randomOperator = math.random(1, 3)
-    
-    if (randomOperator == 1) then
-     Music1Channel = audio.play(Music1)
-    elseif (randomOperator == 2) then 
-     Music1Channel = audio.play(Music2)
-    elseif (randomOperator == 3) then
-     Music1Channel = audio.play(Music3)
-    end
 
------------------------------------------------------------------------------------------
--- INITIALIZATIONS
------------------------------------------------------------------------------------------
 
--- Use Composer Libraries
-local composer = require( "composer" )
-local widget = require( "widget" )
-
------------------------------------------------------------------------------------------
-
--- Naming Scene
-sceneName = "level1_screen"
-
------------------------------------------------------------------------------------------
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
@@ -106,7 +102,7 @@ end
 
 -- The local variables for this scene
 local bkg_image
-local physics = require("physics")
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -366,6 +362,8 @@ end --function scene:create( event )
 -- The function called when the scene is issued to appear on screen
 function scene:show( event )
 
+
+
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
@@ -380,8 +378,16 @@ function scene:show( event )
     elseif ( phase == "did" ) then
 
      AddPhysicsBodies()
+    --random bkg music 
+    randomOperator = math.random(1, 3)
     
-
+    if (randomOperator == 1) then
+         Music1Channel = audio.play(Music1)
+    elseif (randomOperator == 2) then 
+        Music1Channel = audio.play(Music2)
+    elseif (randomOperator == 3) then
+        Music1Channel = audio.play(Music3)
+    end
 
 
 
