@@ -35,7 +35,7 @@ local Music3Channel
 
 
 
-
+soundOn = true
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
@@ -109,13 +109,17 @@ function StartGame( event )
     end
 end
 
+
+
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
 -- The local variables for this scene
 local bkg_image
-
+local muteButton
+local unmuteButton
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -127,7 +131,17 @@ function scene:create( event )
     local sceneGroup = self.view
     ------------------------------------------------------------------------------------------
     --Images
-    
+    muteButton = display.newImageRect("Images/muteButton.png", 200, 200)
+    muteButton.x = display.contentWidth/2
+    muteButton.y = 500
+    muteButton.isVisible = false
+
+    unmuteButton = display.newImageRect("Images/unmute Button.png", 200, 200)
+    unmuteButton.x = display.contentWidth/2
+    unmuteButton.y = 500
+    unmuteButton.isVisible = true
+
+
 
     ground = display.newImage("Images/floor.png", 50, 50)
     ground.x = display.contentWidth/2
@@ -523,8 +537,40 @@ function scene:show( event )
     end
 
 
+     
+    
 
 
+    local function unmute(touch)
+        if (touch.phase == "ended") then
+        -- pause the sound 
+              audio.pause(Music1)
+               audio.pause(Music2)
+                audio.pause(Music3)
+                --mute it
+                soundOn = true
+            --hide the mute button and show the unmute button 
+              muteButton.isVisible = false
+             unmuteButton.isVisible = true
+             end
+        end
+
+local function Mute(touch)
+        if (touch.phase == "ended") then
+         -- pause the sound 
+            audio.pause(Music1)
+            audio.pause(Music2)
+            audio.pause(Music3)
+            --mute it
+            soundOn = false
+            --hide the mute button and show the unmute button 
+             muteButton.isVisible = true
+             unmuteButton.isVisible = false
+             end
+         end
+     
+     unmuteButton:addEventListener("touch", unmute)
+     muteButton:addEventListener("touch", Mute)
      dropZone:addEventListener( "touch",StartGame )
 
         -- Called when the scene is now on screen.
@@ -549,11 +595,15 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-
+        audio.stop(Music1Channel)
+        audio.stop(Music2Channel)
+        audio.stop(Music3Channel)
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        muteButton:removeEventListener("touch", Mute)
+        unmuteButton:removeEventListener("touch", unmute)
     end
 
 end --function scene:hide( event )
