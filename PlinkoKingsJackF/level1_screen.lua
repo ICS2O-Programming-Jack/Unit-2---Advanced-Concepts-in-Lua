@@ -541,31 +541,31 @@ function scene:show( event )
     
 
 
-    local function unmute(touch)
+     local function Mute(touch)
         if (touch.phase == "ended") then
         -- pause the sound 
               audio.pause(Music1)
                audio.pause(Music2)
                 audio.pause(Music3)
                 --mute it
-                soundOn = true
+                soundOn = false
             --hide the mute button and show the unmute button 
-              muteButton.isVisible = false
-             unmuteButton.isVisible = true
+              muteButton.isVisible = true
+             unmuteButton.isVisible = false
              end
         end
 
-local function Mute(touch)
+      local function unmute(touch)
         if (touch.phase == "ended") then
          -- pause the sound 
             audio.pause(Music1)
             audio.pause(Music2)
             audio.pause(Music3)
             --mute it
-            soundOn = false
+            soundOn = true
             --hide the mute button and show the unmute button 
-             muteButton.isVisible = true
-             unmuteButton.isVisible = false
+             muteButton.isVisible = false
+             unmuteButton.isVisible = true
              end
          end
      
