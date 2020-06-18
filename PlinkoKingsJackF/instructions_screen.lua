@@ -30,6 +30,12 @@ local bkg_image
 local backButton
 
 -----------------------------------------------------------------------------------------
+--Music
+-----------------------------------------------------------------------------------------
+local LMusic = audio.loadSound("Sounds/MusicZ.mp3")
+local LMusicChannel
+
+-----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
@@ -114,7 +120,7 @@ function scene:show( event )
         -- Called when the scene is still off screen (but is about to come on screen).
 
     -----------------------------------------------------------------------------------------
-
+LMusicChannel = audio.play(LMusic)
     elseif ( phase == "did" ) then
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
@@ -143,7 +149,7 @@ function scene:hide( event )
         -- Example: stop timers, stop animation, stop audio, etc.
 
     -----------------------------------------------------------------------------------------
-
+audio.stop(LMusicChannel)
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
     end

@@ -1,4 +1,5 @@
 --
+--
 -- level1_screen.lua
 -- Created by: Your Name
 -- Date: Month Day, Year
@@ -18,11 +19,25 @@ local physics = require("physics")
 
 -- Naming Scene
 sceneName = "level1_screen"
-
+-- Creating Scene Object
+local scene = composer.newScene( sceneName )
+-----------------------------------------------------------------------------------------
+-- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
+-- The local variables for this scene
+local bkg_image
+local muteButton
+local unmuteButton
 
+-----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+soundOn = true
+-----------------------------------------------------------------------------------------
 --Music
+-----------------------------------------------------------------------------------------
 local Music1 = audio.loadSound("Sounds/Music1.mp3")
 local Music1Channel
 
@@ -35,73 +50,157 @@ local Music3Channel
 
 
 
-soundOn = true
--- Creating Scene Object
-local scene = composer.newScene( sceneName )
+
+
 -----------------------------------------------------------------------------------------
 --Functions
 -----------------------------------------------------------------------------------------
+local function Mute(touch)
+    if (touch.phase == "ended") then
+    -- pause the sound 
+        audio.pause(Music1)
+        audio.pause(Music2)
+        audio.pause(Music3)
+             --mute it
+             soundOn = false
+            --hide the mute button and show the unmute button 
+         muteButton.isVisible = true
+         unmuteButton.isVisible = false
+    end
+end
+
+local function unmute(touch)
+    if (touch.phase == "ended") then
+    -- pause the sound 
+        audio.resume(Music1)
+        audio.resume(Music2)
+        audio.resume(Music3)
+         --mute it
+         soundOn = true
+        --hide the mute button and show the unmute button 
+        muteButton.isVisible = false
+        unmuteButton.isVisible = true
+    end
+end
+
 local function AddPhysicsBodies()   
     physics.addBody(ground,"static", {friction=0.2, bounce=0.3})
     physics.addBody(wallL,"static", {friction=0.5, bounce=0.9}) 
     physics.addBody(wallR,"static", {friction=0.5, bounce=0.9})
     physics.addBody(dropZone,"static", {friction=0.5, bounce=0.9})
 
-physics.addBody(pinS,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin1,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin2,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin3,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin4,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin5,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin6,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin7,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin8,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pinS,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin1,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin2,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin3,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin4,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin5,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin6,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin7,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin8,"static", {friction=0.5, bounce=0.3, radius=25})
 
-physics.addBody(pin9,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin10,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin11,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin12,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin13,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin14,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin15,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin9,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin10,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin11,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin12,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin13,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin14,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin15,"static", {friction=0.5, bounce=0.3, radius=25})
 
-physics.addBody(pin16,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin17,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin18,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin19,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin20,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin21,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin22,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin23,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin16,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin17,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin18,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin19,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin20,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin21,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin22,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin23,"static", {friction=0.5, bounce=0.3, radius=25})
 
-physics.addBody(pin24,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin25,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin26,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin27,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin28,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin29,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin30,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin24,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin25,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin26,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin27,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin28,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin29,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin30,"static", {friction=0.5, bounce=0.3, radius=25})
 
-physics.addBody(pin31,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin32,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin33,"static", {friction=0.5, bounce=0.3, radius=25})
-physics.addBody(pin34,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin31,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin32,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin33,"static", {friction=0.5, bounce=0.3, radius=25})
+    physics.addBody(pin34,"static", {friction=0.5, bounce=0.3, radius=25})
 
-physics.addBody(gate1,"static", {friction=0, radius=15})
-physics.addBody(gate2,"static", {friction=0, radius=15})
-physics.addBody(gate3,"static", {friction=0, radius=15})
-physics.addBody(gate4,"static", {friction=0, radius=15})
-physics.addBody(gate5,"static", {friction=0, radius=15})
-physics.addBody(gate6,"static", {friction=0, radius=15})
-physics.addBody(gate7,"static", {friction=0, radius=15})
+    physics.addBody(gate1,"static", {friction=0, radius=15})
+    physics.addBody(gate2,"static", {friction=0, radius=15})
+    physics.addBody(gate3,"static", {friction=0, radius=15})
+    physics.addBody(gate4,"static", {friction=0, radius=15})
+    physics.addBody(gate5,"static", {friction=0, radius=15})
+    physics.addBody(gate6,"static", {friction=0, radius=15})
+    physics.addBody(gate7,"static", {friction=0, radius=15})
 
 
     physics.addBody(Ball1, {density=2.0, friction=0.5, bounce=0.9, radius=25})
     physics.addBody(Ball2, {density=2.0, friction=0.5, bounce=0.9, radius=25})
     physics.addBody(Ball3, {density=2.0, friction=0.5, bounce=0.9, radius=25})
     
-end
+    end
+local function RemovePhysicsBodies()   
+    physics.removeBody(ground)
+    physics.removeBody(wallL) 
+    physics.removeBody(wallR)
+    physics.removeBody(dropZone)
 
+    physics.removeBody(pinS)
+    physics.removeBody(pin1)
+    physics.removeBody(pin2)
+    physics.removeBody(pin3)
+    physics.removeBody(pin4)
+    physics.removeBody(pin5)
+    physics.removeBody(pin6)
+    physics.removeBody(pin7)
+    physics.removeBody(pin8)
+
+    physics.removeBody(pin9)
+    physics.removeBody(pin10)
+    physics.removeBody(pin11)
+    physics.removeBody(pin12)
+    physics.removeBody(pin13)
+    physics.removeBody(pin14)
+    physics.removeBody(pin15)
+
+    physics.removeBody(pin16)
+    physics.removeBody(pin17)
+    physics.removeBody(pin18)
+    physics.removeBody(pin19)
+    physics.removeBody(pin20)
+    physics.removeBody(pin21)
+    physics.removeBody(pin22)
+    physics.removeBody(pin23)
+
+    physics.removeBody(pin24)
+    physics.removeBody(pin25)
+    physics.removeBody(pin26)
+    physics.removeBody(pin27)
+    physics.removeBody(pin28)
+    physics.removeBody(pin29)
+    physics.removeBody(pin30)
+
+    physics.removeBody(pin31)
+    physics.removeBody(pin32)
+    physics.removeBody(pin33)
+    physics.removeBody(pin34)
+
+    physics.removeBody(gate1)
+    physics.removeBody(gate2)
+    physics.removeBody(gate3)
+    physics.removeBody(gate4)
+    physics.removeBody(gate5)
+    physics.removeBody(gate6)
+
+    physics.removeBody(Ball1)
+    physics.removeBody(Ball2)
+    physics.removeBody(Ball3)
+    
+    end
 function StartGame( event )
     -- if thouch faze started
     if (event.phase == "began") then
@@ -109,17 +208,13 @@ function StartGame( event )
     end
 end
 
+-- Creating Transitioning Function back to main menu
+local function BackTransition( )
+    composer.gotoScene( "main_menu", {effect = "slideUp", time = 500})
+end
 
 
 
------------------------------------------------------------------------------------------
--- LOCAL VARIABLES
------------------------------------------------------------------------------------------
-
--- The local variables for this scene
-local bkg_image
-local muteButton
-local unmuteButton
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -131,15 +226,58 @@ function scene:create( event )
     local sceneGroup = self.view
     ------------------------------------------------------------------------------------------
     --Images
-    muteButton = display.newImageRect("Images/muteButton.png", 200, 200)
-    muteButton.x = display.contentWidth/2
-    muteButton.y = 500
-    muteButton.isVisible = false
+ -- Insert the background image
+    bkg_image = display.newImageRect("Images/level1_screen.png", display.contentWidth, display.contentHeight)
+    bkg_image.x = display.contentCenterX
+    bkg_image.y = display.contentCenterY
+    bkg_image.width = display.contentWidth
+    bkg_image.height = display.contentHeight
 
-    unmuteButton = display.newImageRect("Images/unmute Button.png", 200, 200)
-    unmuteButton.x = display.contentWidth/2
-    unmuteButton.y = 500
+        -- Insert background image into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( bkg_image )    
+
+     -----------------------------------------------------------------------------------------
+    -- BUTTON WIDGETS
+    -----------------------------------------------------------------------------------------
+
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = 100,
+        y = 50,
+
+        -- Setting Dimensions
+        width = 180,
+        height = 70,
+         
+        -- Setting Visual Properties
+        defaultFile = "Images/Back Button Unpressed.png",
+        overFile = "Images/Back Button Pressed.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
+
+
+    -- Associating Buttons with this scene
+  
+
+    muteButton = display.newImageRect("Images/muteButton.png", 200, 200)
+    muteButton.x = display.contentWidth - 50
+    muteButton.y = 50
+    muteButton.isVisible = false
+    muteButton.xScale = .5
+    muteButton.yScale = .5
+    
+
+    unmuteButton = display.newImageRect("Images/unmute button.png", 200, 200)
+    unmuteButton.x = display.contentWidth - 50
+    unmuteButton.y = 50
     unmuteButton.isVisible = true
+    unmuteButton.xScale = .5
+    unmuteButton.yScale = .5
 
 
 
@@ -179,11 +317,11 @@ function scene:create( event )
     fifteen.xScale = .4
     fifteen.yScale = .4
     
-    fifteen = display.newImage("Images/-15.tif", 50, 50)
-     fifteen.x = 940
-     fifteen.y = 690
-    fifteen.xScale = .4
-    fifteen.yScale = .4
+    fifteen2 = display.newImage("Images/-15.tif", 50, 50)
+     fifteen2.x = 940
+     fifteen2.y = 690
+    fifteen2.xScale = .4
+    fifteen2.yScale = .4
 
 
      ten = display.newImage("Images/10.tif", 50, 50)
@@ -192,11 +330,11 @@ function scene:create( event )
      ten.xScale = .4
      ten.yScale = .4
    
-    ten = display.newImage("Images/10.tif", 50, 50)
-     ten.x = 580
-     ten.y = 690
-     ten.xScale = .4
-     ten.yScale = .4
+    ten2 = display.newImage("Images/10.tif", 50, 50)
+     ten2.x = 580
+     ten2.y = 690
+     ten2.xScale = .4
+     ten2.yScale = .4
    
 
     twentyFive = display.newImage("Images/25.tif", 50, 50)
@@ -205,11 +343,11 @@ function scene:create( event )
     twentyFive.xScale = .4
     twentyFive.yScale = .4
 
-    twentyFive = display.newImage("Images/25.tif", 50, 50)
-    twentyFive.x = 826
-    twentyFive.y = 690
-    twentyFive.xScale = .4
-    twentyFive.yScale = .4
+    twentyFive2 = display.newImage("Images/25.tif", 50, 50)
+    twentyFive2.x = 826
+    twentyFive2.y = 690
+    twentyFive2.xScale = .4
+    twentyFive2.yScale = .4
 
 
      fifty = display.newImage("Images/50.tif", 50, 50)
@@ -218,11 +356,11 @@ function scene:create( event )
     fifty.xScale = .3
     fifty.yScale = .3
 
-     fifty = display.newImage("Images/50.tif", 50, 50)
-    fifty.x = 700
-    fifty.y = 690
-    fifty.xScale = .3
-    fifty.yScale = .3
+     fifty2 = display.newImage("Images/50.tif", 50, 50)
+    fifty2.x = 700
+    fifty2.y = 690
+    fifty2.xScale = .3
+    fifty2.yScale = .3
 
 
 
@@ -488,19 +626,75 @@ pin34:rotate(45)
     Ball3.y = 2
 
     -----------------------------------------------------------------------------------------
+    --sceneGroups
+    -----------------------------------------------------------------------------------------
+    sceneGroup:insert(unmuteButton)
+    sceneGroup:insert(muteButton)
+    sceneGroup:insert(pin1)
+    sceneGroup:insert(pin2)
+    sceneGroup:insert(pin3)
+    sceneGroup:insert(pin4)
+    sceneGroup:insert(pin5)
+    sceneGroup:insert(pin6)
+    sceneGroup:insert(pin7)
+    sceneGroup:insert(pin8)
+    sceneGroup:insert(pin9)
+    sceneGroup:insert(pin10)
+    sceneGroup:insert(pin11)
+    sceneGroup:insert(pin12)
+    sceneGroup:insert(pin12)
+    sceneGroup:insert(pin13)
+    sceneGroup:insert(pin14)
+    sceneGroup:insert(pin15)
+    sceneGroup:insert(pin16)
+    sceneGroup:insert(pin17)
+    sceneGroup:insert(pin18)
+    sceneGroup:insert(pin19)
+    sceneGroup:insert(pin20)
+    sceneGroup:insert(pin21)
+    sceneGroup:insert(pin22)
+    sceneGroup:insert(pin23)
+    sceneGroup:insert(pin24)
+    sceneGroup:insert(pin25)
+    sceneGroup:insert(pin26)
+    sceneGroup:insert(pin27)
+    sceneGroup:insert(pin28)
+    sceneGroup:insert(pin29)
+    sceneGroup:insert(pin30)
+    sceneGroup:insert(pin31)
+    sceneGroup:insert(pin32)
+    sceneGroup:insert(pin33)
+    sceneGroup:insert(pin34)
+    sceneGroup:insert(pinS)
+    sceneGroup:insert(gate1)
+    sceneGroup:insert(gate2)
+    sceneGroup:insert(gate3)
+    sceneGroup:insert(gate4)
+    sceneGroup:insert(gate5)
+    sceneGroup:insert(gate6)
+    sceneGroup:insert(gate7)
+    sceneGroup:insert(fifteen)
+    sceneGroup:insert(fifteen2)
+    sceneGroup:insert(ten)
+    sceneGroup:insert(ten2)
+    sceneGroup:insert(twentyFive)
+    sceneGroup:insert(twentyFive2)
+    sceneGroup:insert(fifty)
+    sceneGroup:insert(fifty2)
+    sceneGroup:insert(backButton)
+    sceneGroup:insert(dropZone)
+    sceneGroup:insert(Ball1)
+    sceneGroup:insert(Ball2)
+    sceneGroup:insert(Ball3)
 
-    -- Insert the background image
-    bkg_image = display.newImageRect("Images/level1_screen.png", display.contentWidth, display.contentHeight)
-    bkg_image.x = display.contentCenterX
-    bkg_image.y = display.contentCenterY
-    bkg_image.width = display.contentWidth
-    bkg_image.height = display.contentHeight
 
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
 
-        -- Insert background image into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( bkg_image )    
+
+
+
+
+
+
 
 end --function scene:create( event )
 
@@ -541,36 +735,10 @@ function scene:show( event )
     
 
 
-     local function Mute(touch)
-        if (touch.phase == "ended") then
-        -- pause the sound 
-              audio.pause(Music1)
-               audio.pause(Music2)
-                audio.pause(Music3)
-                --mute it
-                soundOn = false
-            --hide the mute button and show the unmute button 
-              muteButton.isVisible = true
-             unmuteButton.isVisible = false
-             end
-        end
-
-      local function unmute(touch)
-        if (touch.phase == "ended") then
-         -- pause the sound 
-            audio.pause(Music1)
-            audio.pause(Music2)
-            audio.pause(Music3)
-            --mute it
-            soundOn = true
-            --hide the mute button and show the unmute button 
-             muteButton.isVisible = false
-             unmuteButton.isVisible = true
-             end
-         end
      
-     unmuteButton:addEventListener("touch", unmute)
-     muteButton:addEventListener("touch", Mute)
+     
+     unmuteButton:addEventListener("touch", Mute)
+     muteButton:addEventListener("touch", unmute)
      dropZone:addEventListener( "touch",StartGame )
 
         -- Called when the scene is now on screen.
@@ -604,6 +772,7 @@ function scene:hide( event )
         -- Called immediately after scene goes off screen.
         muteButton:removeEventListener("touch", Mute)
         unmuteButton:removeEventListener("touch", unmute)
+        RemovePhysicsBodies()
     end
 
 end --function scene:hide( event )
@@ -622,8 +791,9 @@ function scene:destroy( event )
     -- Insert code here to clean up the scene.
     -- Example: remove display objects, save state, etc.
 
-end -- function scene:destroy( event )
-
+end 
+function scene:destroy( event )
+end
 -----------------------------------------------------------------------------------------
 -- EVENT LISTENERS
 -----------------------------------------------------------------------------------------

@@ -30,6 +30,11 @@ local bkg_image
 local backButton
 
 -----------------------------------------------------------------------------------------
+--Music
+-----------------------------------------------------------------------------------------
+local CMusic = audio.loadSound("Sounds/CSong.mp3")
+local CMusicChannel
+-----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
@@ -112,7 +117,7 @@ function scene:show( event )
 
     if ( phase == "will" ) then
         -- Called when the scene is still off screen (but is about to come on screen).
-
+CMusicChannel = audio.play(CMusic)
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
@@ -141,7 +146,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-
+audio.stop(CMusicChannel)
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
