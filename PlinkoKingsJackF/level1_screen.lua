@@ -69,6 +69,9 @@ local function Mute(touch)
     end
 end
 
+
+
+
 local function unmute(touch)
     if (touch.phase == "ended") then
     -- pause the sound 
@@ -138,9 +141,9 @@ local function AddPhysicsBodies()
     physics.addBody(gate7,"static", {friction=0, radius=15})
 
 
-    physics.addBody(Ball1, {density=2.0, friction=0.5, bounce=0.9, radius=25})
-    physics.addBody(Ball2, {density=2.0, friction=0.5, bounce=0.9, radius=25})
-    physics.addBody(Ball3, {density=2.0, friction=0.5, bounce=0.9, radius=25})
+    physics.addBody(Ball1, {density=2.0, friction=0.5, bounce=.95, radius=25})
+    physics.addBody(Ball2, {density=2.0, friction=0.5, bounce=.96, radius=25})
+    physics.addBody(Ball3, {density=2.0, friction=0.5, bounce=.97, radius=25})
     
     end
 local function RemovePhysicsBodies()   
@@ -201,6 +204,23 @@ local function RemovePhysicsBodies()
     physics.removeBody(Ball3)
     
     end
+function Nitro( event )
+    -- if thouch faze started
+    if (event.phase == "began") then
+    
+    Ball1.x = 30
+    Ball1.y = 106
+
+    Ball2.x = 30
+    Ball2.y = 53
+
+    Ball3.x = 30
+    Ball3.y = 2
+    
+    dropZone.x = 500
+    end
+end
+
 function StartGame( event )
     -- if thouch faze started
     if (event.phase == "began") then
@@ -279,6 +299,12 @@ function scene:create( event )
     unmuteButton.xScale = .5
     unmuteButton.yScale = .5
 
+
+    Gfuel = display.newImage("Images/Gfuel.png", 50, 50)
+    Gfuel.x = display.contentWidth - 50
+    Gfuel.y = 200
+    Gfuel.xScale = .15
+    Gfuel.yScale = .15
 
 
     ground = display.newImage("Images/floor.png", 50, 50)
@@ -686,7 +712,7 @@ pin34:rotate(45)
     sceneGroup:insert(Ball1)
     sceneGroup:insert(Ball2)
     sceneGroup:insert(Ball3)
-
+    sceneGroup:insert(Gfuel)
 
 
 
@@ -712,7 +738,8 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-   physics.start()
+
+        physics.start()
         -- Called when the scene is still off screen (but is about to come on screen).
     -----------------------------------------------------------------------------------------
 
@@ -736,10 +763,11 @@ function scene:show( event )
 
 
      
-     
+    
      unmuteButton:addEventListener("touch", Mute)
      muteButton:addEventListener("touch", unmute)
      dropZone:addEventListener( "touch",StartGame )
+     Gfuel:addEventListener( "touch", Nitro )
 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
@@ -772,6 +800,7 @@ function scene:hide( event )
         -- Called immediately after scene goes off screen.
         muteButton:removeEventListener("touch", Mute)
         unmuteButton:removeEventListener("touch", unmute)
+
         RemovePhysicsBodies()
     end
 
@@ -791,9 +820,7 @@ function scene:destroy( event )
     -- Insert code here to clean up the scene.
     -- Example: remove display objects, save state, etc.
 
-end 
-function scene:destroy( event )
-end
+end --function scene:destroy( event )
 -----------------------------------------------------------------------------------------
 -- EVENT LISTENERS
 -----------------------------------------------------------------------------------------
